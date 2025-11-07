@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>~/projects</title>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="main.css">
+  <style>
+    :root{--bg:#0d0d0d;--fg:#f5f5f5;--muted:rgba(245,245,245,0.55);--accent:#7dd3fc;--mono:"Fira Code", "IBM Plex Mono", monospace}
+    html,body{height:100%}
+    body{margin:0;font-family:var(--mono);background:repeating-linear-gradient(135deg, rgba(255,255,255,0.01) 0 1px, transparent 1px 28px),var(--bg);color:var(--fg);display:flex;flex-direction:column;min-height:100vh}
+    header{padding:20px 28px;display:flex;align-items:center;justify-content:space-between}
+    .brand{font-weight:700}
+    nav a{color:var(--muted);text-decoration:none;margin-left:14px}
+    main{flex:1;display:flex;align-items:flex-start;justify-content:center;padding:28px}
+  .panel{--px:0px;--py:18px;--pb:40px;max-width:860px;width:100%;padding:26px;border:1px solid rgba(255,255,255,0.03);background:linear-gradient(180deg, rgba(255,255,255,0.01), transparent);border-radius:12px;box-shadow:var(--px) var(--py) var(--pb) rgba(255,255,255,0.06);transform:translateY(-6px);transition:box-shadow .15s linear,transform .12s ease}
+    h1.title{font-size:20px;margin:0;color:var(--fg)}
+    .sub{color:var(--muted);margin-top:8px;margin-bottom:12px}
+    .divider{border-top:1px dashed rgba(255,255,255,0.06);margin:12px 0 18px}
+  section.project{--cx:0px;--cy:6px;--cb:18px;margin:18px 0;padding:14px 16px;background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.04);border-radius:10px;box-shadow:var(--cx) var(--cy) var(--cb) rgba(255,255,255,0.04);transition:box-shadow .12s linear,transform .12s ease}
+  section.project h2{margin:0 0 8px 0;font-size:18px}
+  section.project p{margin:0 0 10px 0;color:var(--muted);max-width:66ch}
+  .links{margin-top:8px}
+    .links a{color:var(--accent);text-decoration:none;padding-right:12px;position:relative}
+    .links a::after{content:'';position:absolute;left:0;right:0;bottom:-2px;height:2px;background:transparent;transition:all .2s ease}
+  .links a.glow::after{background:var(--accent);box-shadow:0 0 12px var(--accent)}
+    .links a:hover{text-decoration:underline}
+    footer{padding:18px 28px;border-top:1px solid hsla(0, 0%, 0%, 0.03);color:rgba(255,255,255,0.45);font-size:0.95rem}
+    @media(max-width:640px){.panel{padding:18px}}
+  </style>
+</head>
+<body>
+  <header>
+    <div class="brand">AMKA</div>
+    <nav>
+      <a href="main.html">home</a>
+      <a href="about.html">about</a>
+      <a href="projects.html">projects</a>
+      <a href="#">blog</a>
+      <a href="#">now</a>
+    </nav>
+  </header>
+  <main>
+    <div class="panel">
+      <h1 class="title">~/projects</h1>
+      <div class="sub">things i’ve built, maintained, or broken along the way.</div>
+      <div class="divider"></div>
+      <section class="project" id="amka">
+        <h2>AMKA</h2>
+        <p>A digital notice board platform that lets schools and colleges upload, scan, and share announcements instantly.</p>
+        <div class="links">
+          <a href="https://studio--amkaboard.us-central1.hosted.app/login" class="proj-link" data-type="live" target="_blank" rel="noopener">[Live]</a>
+          <a href="https://github.com/itz-dark007/amkaboard" class="proj-link" data-type="code" target="_blank" rel="noopener">[Code]</a>
+        </div>
+      </section>
+      <section class="project" id="gravity-shift">
+        <h2>Gravity Shift</h2>
+        <p>A small physics-based web game that experiments with gravity inversion and level design.</p>
+        <div class="links">
+          <a href="https://itz-dark007.github.io/gravity-shift" class="proj-link" data-type="play" target="_blank" rel="noopener">[Play]</a>
+          <a href="https://github.com/itz-dark007/gravity-shift" class="proj-link" data-type="code" target="_blank" rel="noopener">[Code]</a>
+        </div>
+      </section>
+    </div>
+  </main>
+  <footer>
+    ~/projects &gt; exit
+  </footer>
+  <script>
+    const links = document.querySelectorAll('.proj-link')
+    links.forEach(l=>{
+      l.addEventListener('mouseenter',()=>l.classList.add('glow'))
+      l.addEventListener('mouseleave',()=>l.classList.remove('glow'))
+    })
+    const panel = document.querySelector('.panel')
+    const cards = document.querySelectorAll('section.project')
+    function setPanelShadow(x,y){
+      const rect = panel.getBoundingClientRect()
+      const cx = (x - rect.left) - rect.width/2
+      const cy = (y - rect.top) - rect.height/2
+      const px = Math.round((cx/rect.width)*24)
+      const py = Math.round((cy/rect.height)*24 + 18)
+      const pb = Math.round(30 + Math.abs(cx+cy)/8)
+      panel.style.setProperty('--px', px+'px')
+      panel.style.setProperty('--py', py+'px')
+      panel.style.setProperty('--pb', pb+'px')
+      cards.forEach((c, i)=>{
+        const ix = Math.round((cx/rect.width)*(6 + i*2))
+        const iy = Math.round((cy/rect.height)*(6 + i*2) + 6)
+        const ib = Math.round(10 + Math.abs(ix+iy)/4)
+        c.style.setProperty('--cx', ix+'px')
+        c.style.setProperty('--cy', iy+'px')
+        c.style.setProperty('--cb', ib+'px')
+        c.style.transform = `translateY(${Math.max(-4, -Math.abs(iy)/3)}px)`
+      })
+    }
+    panel.addEventListener('mousemove', e=>setPanelShadow(e.clientX,e.clientY))
+    panel.addEventListener('mouseleave', ()=>{
+      panel.style.setProperty('--px','0px')
+      panel.style.setProperty('--py','18px')
+      panel.style.setProperty('--pb','40px')
+      cards.forEach(c=>{c.style.setProperty('--cx','0px');c.style.setProperty('--cy','6px');c.style.setProperty('--cb','18px');c.style.transform='translateY(0)'} )
+    })
+  </script>
+</body>
+</html>
